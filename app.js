@@ -27,6 +27,10 @@ function selectGameMode(mode) {
   const p1Name = p1Input ? p1Input.value.trim() : "Player 1";
   const p2Name = p2Input ? p2Input.value.trim() : "Player 2";
 
+  // Confirm New Game 
+  function confirmNewGame() {
+    if(confirm("Are you sure you want to start a new game. re_start of the old_date") =="){window,location,
+
   // Initialize bench arrays
   initGameState(mode);
 

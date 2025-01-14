@@ -121,12 +121,14 @@
       gap: 10px;
       justify-content: center;
     }
-
     .pokemon.bench {
       max-width: 150px;
       font-size: 12px;
     }
-    
+    /* Adjust font size for bench Pokémon names */
+.pokemon.bench .pokemon-name {
+  font-size: 12px;
+}
     /* Status effects */
     .status-effects {
       display: flex;

@@ -115,11 +115,14 @@ h1, h2, h3 {
 /* Bench styling */
 .bench-container {
   display: grid;
-  /* We'll default to 3 columns (Pocket).
-     We'll adjust to 5 columns in JS if Standard is chosen. */
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* Default: 3 columns */
   gap: 10px;
   justify-content: center;
+}
+.bench-container.standard {
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  grid-auto-rows: 1fr; /* Ensure all rows are evenly spaced */
+  grid-template-rows: repeat(2, 1fr); /* 2 rows for Standard mode */
 }
 .pokemon.bench {
   max-width: 150px;

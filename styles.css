@@ -121,12 +121,8 @@ h1, h2, h3 {
 }
 .bench-container.standard {
   grid-template-columns: repeat(3, 1fr); /* 3 columns */
-  grid-auto-rows: 1fr; /* Ensure all rows are evenly spaced */
   grid-template-rows: repeat(2, 1fr); /* 2 rows for Standard mode */
-}
-.pokemon.bench {
-  max-width: 150px;
-  font-size: 12px;
+  gap: 10px;
 }
 
 /* Status effects */

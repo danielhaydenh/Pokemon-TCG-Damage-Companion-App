@@ -3,27 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pokémon TCG Damage Companion App</title>
+  <title>Pok√©mon TCG Tracker - New Game</title>
   <link rel="stylesheet" href="styles.css" />
   <script src="app.js" defer></script>
 </head>
 <body>
+  <!-- Navigation Bar -->
   <nav class="navbar">
-    <a href="#" onclick="confirmNewGame()">New Game</a>
+    <a href="index.html">New Game</a>
     <a href="player1.html">Player 1</a>
     <a href="player2.html">Player 2</a>
   </nav>
 
   <div class="container">
+    <div class="logo logo-large">
+      <img src="https://i.imgur.com/m7MEzLx.png" alt="Logo">
+    </div>
+
     <h1>New Game</h1>
-    <label for="player1-name">Player 1 Name:</label><br>
-    <input type="text" id="player1-name" placeholder="Player 1" /><br><br>
 
-    <label for="player2-name">Player 2 Name:</label><br>
-    <input type="text" id="player2-name" placeholder="Player 2" /><br><br>
+    <!-- Player Name Inputs -->
+    <div class="section">
+      <label for="player1-name">Player 1 Name:</label><br>
+      <input type="text" id="player1-name" placeholder="Player 1" /><br><br>
 
-    <button onclick="selectGameMode('standard')">Standard Mode</button>
-    <button onclick="selectGameMode('pocket')">Pocket Mode</button>
+      <label for="player2-name">Player 2 Name:</label><br>
+      <input type="text" id="player2-name" placeholder="Player 2" />
+    </div>
+
+    <!-- Game Mode Buttons -->
+    <div class="section">
+      <button class="button" onclick="selectGameMode('standard')">Standard</button>
+      <button class="button" onclick="selectGameMode('pocket')">Pocket</button>
+    </div>
   </div>
 </body>
 </html>

@@ -1,22 +1,9 @@
-// Global game state
 let players = {
-  player1: {
-    name: "Player 1",
-    activePokemon: null,
-    benchPokemon: []
-  },
-  player2: {
-    name: "Player 2",
-    activePokemon: null,
-    benchPokemon: []
-  }
+  player1: { name: "Player 1", activePokemon: null, benchPokemon: [] },
+  player2: { name: "Player 2", activePokemon: null, benchPokemon: [] },
 };
+let gameMode = null;
 
-let gameMode = null; // "standard" or "pocket"
-
-/**
- * Confirm before starting a new game.
- */
 function confirmNewGame() {
   if (confirm("Are you sure you want to start a new game? All current data will be lost.")) {
     localStorage.removeItem("pokemonGameState");
@@ -24,55 +11,39 @@ function confirmNewGame() {
   }
 }
 
-/**
- * Render Bench Pokémon for a player.
- */
-function renderBench(player) {
-  const benchContainer = document.getElementById(`bench-pokemon-${player}`);
-  if (!benchContainer) return;
+function selectGameMode(mode) {
+  gameMode = mode;
 
-  // Adjust layout based on game mode
-  if (gameMode === "standard") {
-    benchContainer.classList.add("standard");
-  } else {
-    benchContainer.classList.remove("standard");
-  }
+  players.player1.benchPokemon = new Array(mode === "standard" ? 5 : 3).fill(null);
+  players.player2.benchPokemon = new Array(mode === "standard" ? 5 : 3).fill(null);
 
-  benchContainer.innerHTML = ""; // Clear existing bench slots
-
-  players[player].benchPokemon.forEach((pokemon, index) => {
-    const div = document.createElement("div");
-    div.className = "pokemon bench";
-
-    if (pokemon) {
-      div.innerHTML = `
-        <p class="pokemon-name">${pokemon.name}</p>
-        <p class="pokemon-hp">${pokemon.hp} HP</p>
-        <div class="status-effects">
-          ${renderStatusIcons(player, index, pokemon)}
-        </div>
-        <button class="button" onclick="adjustHP('${player}', ${index}, 10)">+10 HP</button>
-        <button class="button" onclick="adjustHP('${player}', ${index}, -10)">-10 HP</button>
-        <button class="button" onclick="swapToActive('${player}', ${index})">Swap to Active</button>
-        <button class="button" onclick="evolvePokemon('${player}', ${index})">Evolve</button>
-      `;
-    } else {
-      div.innerHTML = `<p>Empty Slot</p>`;
-    }
-    benchContainer.appendChild(div);
-  });
+  localStorage.setItem("pokemonGameState", JSON.stringify({ gameMode, players }));
+  window.location.href = "player1.html";
 }
 
-/**
- * Render status effect icons (SLP, BRN, CNF, PAR, PSN).
- */
-function renderStatusIcons(player, slot, pokemon) {
-  const s = (pokemon.status || {});
-  return `
-    <div class="status-effect ${s.slp ? 'active' : ''}" onclick="toggleStatus('${player}', '${slot}', 'slp')">SLP</div>
-    <div class="status-effect ${s.brn ? 'active' : ''}" onclick="toggleStatus('${player}', '${slot}', 'brn')">BRN</div>
-    <div class="status-effect ${s.cnf ? 'active' : ''}" onclick="toggleStatus('${player}', '${slot}', 'cnf')">CNF</div>
-    <div class="status-effect ${s.par ? 'active' : ''}" onclick="toggleStatus('${player}', '${slot}', 'par')">PAR</div>
-    <div class="status-effect ${s.psn ? 'active' : ''}" onclick="toggleStatus('${player}', '${slot}', 'psn')">PSN</div>
-  `;
+function onLoadPlayerPage(player) {
+  const savedState = JSON.parse(localStorage.getItem("pokemonGameState") || "{}");
+  if (savedState.players) {
+    gameMode = savedState.gameMode;
+    players = savedState.players;
+  }
+  renderPageForPlayer(player);
+}
+
+function renderPageForPlayer(player) {
+  document.getElementById(`${player}-title`).textContent = players[player].name;
+  renderBench(player);
+}
+
+function renderBench(player) {
+  const benchContainer = document.getElementById(`bench-pokemon-${player}`);
+  benchContainer.classList.toggle("standard", gameMode === "standard");
+  benchContainer.innerHTML = players[player].benchPokemon
+    .map(
+      (pokemon, index) => `
+      <div class="pokemon">
+        ${pokemon ? `<p>${pokemon.name}</p><p>${pokemon.hp} HP</p>` : "<p>Empty Slot</p>"}
+      </div>`
+    )
+    .join("");
 }

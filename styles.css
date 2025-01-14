@@ -115,15 +115,14 @@ h1, h2, h3 {
 /* Bench styling */
 .bench-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Default: 3 columns */
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  justify-content: center;
 }
+
 .bench-container.standard {
-  grid-template-columns: repeat(3, 1fr); /* 3 columns */
-  grid-template-rows: repeat(2, 1fr); /* 2 rows for Standard mode */
-  gap: 10px;
+  grid-template-rows: repeat(2, 1fr);
 }
+
 
 /* Status effects */
 .status-effects {
